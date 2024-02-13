@@ -11,6 +11,12 @@ const User = require('./models/user');
 app.use(express.json());
 
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
 
 // * Create routes in Express
 app.get('/api/users', async (req, res) => {
