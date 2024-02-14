@@ -13,7 +13,10 @@ module.exports = class UserController {
         //#region 
         try {
             const users = await User.find();
-            res.json(users)
+            res.json({
+                "count": users.length,
+                "users": users
+            })
         } catch (err) {
             console.error(err);
             res.status(500).json({ message: 'Failed to fetch users', error: err.message });
@@ -21,6 +24,7 @@ module.exports = class UserController {
         }
         //#endregion
     }
+
 
     async userGetById(req, res, next) {
         // #region

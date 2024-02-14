@@ -27,7 +27,14 @@ app.delete('/api/users/:id', userController.userDelete);
 
 app.post('/api/users', userController.userCreate);
 
-connectDB();
 
 //* listening to server and connecting to db
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(port, (error) => {
+    if (!error) {
+        console.log(`Server started on port ${port}`);
+        connectDB();
+
+    } else {
+        console.error("aaaaaaaaaaaaaaa", error);
+    }
+});
