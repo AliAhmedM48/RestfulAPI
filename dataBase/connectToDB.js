@@ -4,7 +4,7 @@ let URL_DATABASE = process.env.URL_DATABASE;
 
 let connect = () => {
   const connectDB = mongoose
-    .connect(URL_DATABASE)
+    .connect(URL_DATABASE, { dbName: DB_NAME_MONGO_ATLAS })
     .then(() => {
       console.log("connect to DB is successfully");
     })
