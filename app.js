@@ -7,6 +7,7 @@ const storsRoute = require("./routes/stories.router");
 const connect=require("./dataBase/connectToDB");
 
 const {verifyToken , checkRole} = require("./middleware/auth");
+const User = require("./models/user.model");
 
 
 dotenv.config();
@@ -17,7 +18,27 @@ const PORT =  process.env.PORT||5000;
 
 
 app.use(express.json());
+app.get("/users", async(req,res)=>{
+  try
+  {
+    const users = await User.find({});
+    res.json(users);
+  }
+  catch(eror)
+  {
+    console.log(eror);
+    res.status(500).json({
+      message: "Internal Server Error"
+    })
+  }
 
+})
+
+app.get("/test",(req , res)=>{
+  res.json({
+    message :"Hello"
+  })
+})
 app.use("/user",verifyToken,checkRole(), userRoute);
 app.use("/devjourney", authRoute);
 
