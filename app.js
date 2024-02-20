@@ -43,6 +43,7 @@ app.use("/user",verifyToken,checkRole(), userRoute);
 app.use("/devjourney", authRoute);
 
 //stories
+// app.use("/story",verifyToken, storsRoute);
 app.use("/story", storsRoute);
 
 

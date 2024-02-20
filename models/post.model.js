@@ -12,18 +12,21 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    ///population
     createdBy: {
       type: String,
-      required: true,
     },
-    User_id: {
-      type: String,
-      required: true,
-    },
+    ///
     category: {
       type: String,
-      required: true,
-      enum: ["Historical", "Biographical"],
+      enum: ["Historical", "Technology"],
+    },
+    coverfile: {
+      type: String,
+      default: "none",
+    },
+    covertype: {
+      type: String,
     },
   },
   // for automatic createdAt and updatedAt

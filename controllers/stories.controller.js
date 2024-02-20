@@ -3,18 +3,22 @@ const Story = require("../models/post.model");
 let count = 10;
 const createStories = async (req, res) => {
   try {
-    const { title, body, createdBy, User_id, category } = req.body;
-    await Story.create({
+    const { title, body,category,coverfile,covertype } = req.body;
+
+  
+    
+   const createstory= await Story.create({
       title,
       body,
-      createdBy,
-      User_id,
+      // createdBy:req.userOrAdmin._id,
       category,
+      coverfile,
+      covertype
     });
-    res.json({ status: "success" });
+    res.json({ createstory,status: "success" });
   } catch (error) {
     console.log(error);
-    // next(error);
+    next();
   }
 };
 
@@ -24,7 +28,7 @@ const getStories = async (req, res) => {
     res.json({ findAll, message: "api is working!" });
   } catch (error) {
     console.log(error);
-    next(error);
+    next();
   }
 };
 
@@ -35,7 +39,7 @@ const getStoryById = async (req, res, next) => {
     res.json({ findById });
   } catch (error) {
     console.log(error);
-    next(error);
+    next();
   }
 };
 const updateStory = async (req, res, next) => {
@@ -53,7 +57,7 @@ const updateStory = async (req, res, next) => {
     });
     res.send({ updated, message: "story Updated successfully!" });
   } catch (error) {
-    next(error);
+    next();
   }
 };
 const deleteStory = async (req, res, next) => {
@@ -63,7 +67,7 @@ const deleteStory = async (req, res, next) => {
     res.json({ deleteUser, message: "story Deleted successfully!" });
   } catch (error) {
     console.log(error);
-    next(error);
+    next();
   }
 };
 
@@ -76,7 +80,7 @@ const filterByTitle = async (req, res, next) => {
     res.json({ findById });
   } catch (error) {
     console.log(error);
-    next(error);
+    next();
   }
 };
 
@@ -92,7 +96,7 @@ const onpagination = async (req, res, next) => {
     res.json({ storeisPerPage, message: "api is working!" });
   } catch (error) {
     console.log(error);
-    next(error);
+    next();
   }
 };
 

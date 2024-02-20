@@ -57,12 +57,12 @@ const userSchema = new mongoose.Schema(
     isActive: {
       type: Boolean,
       required: true,
-      default: true
+      default: true,
     },
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User6", userSchema);
 
 module.exports = User;

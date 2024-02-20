@@ -2,11 +2,12 @@ const User = require("../models/user.model.js");
 
 const getAllUser = async (req, res) => {
   try {
+    console.log(req.userOrAdmin);
     const findAll = await User.find();
     res.json({ findAll, message: "api is working!" });
   } catch (error) {
     console.log(error);
-    next(error);
+    next();
   }
 };
 
@@ -17,7 +18,7 @@ const getUserById = async (req, res) => {
     res.json({ findById });
   } catch (error) {
     console.log(error);
-    next(error);
+    next();
   }
 };
 const updateUser = async (req, res, next) => {
@@ -35,7 +36,7 @@ const updateUser = async (req, res, next) => {
     });
     res.send(updated);
   } catch (error) {
-    next(error);
+    next();
   }
 };
 const deleteUser = async (req, res, next) => {
@@ -45,7 +46,7 @@ const deleteUser = async (req, res, next) => {
     res.json({ deleteUser, message: "User Deleted successfully!" });
   } catch (error) {
     console.log(error);
-    next(error);
+    next();
   }
 };
 
