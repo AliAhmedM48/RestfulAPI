@@ -18,9 +18,12 @@ const PORT =  process.env.PORT||5000;
 
 
 
-// app.use(cors());
+app.use(cors());
 app.use(cors({
   origin: 'http://localhost:4200' // Replace with your allowed origin
+}));
+app.use(cors({
+  origin:"*"// Replace with your allowed origin
 }));
 app.use(express.json());
 app.get("/users", async(req,res)=>{
@@ -47,6 +50,13 @@ app.get("/test",(req , res)=>{
 app.use("/user",verifyToken,checkRole(), userRoute);
 app.use("/devjourney", authRoute);
 
+app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:4200' // Replace with your allowed origin
+}));
+app.use(cors({
+  origin:"*"// Replace with your allowed origin
+}));
 //stories
 // app.use("/story",verifyToken, storsRoute);
 app.use("/story", storsRoute);
