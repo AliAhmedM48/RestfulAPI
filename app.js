@@ -18,7 +18,10 @@ const PORT =  process.env.PORT||5000;
 
 
 
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:4200' // Replace with your allowed origin
+}));
 app.use(express.json());
 app.get("/users", async(req,res)=>{
   try
