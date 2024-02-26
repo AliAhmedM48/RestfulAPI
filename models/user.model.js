@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Joi = require("joi");
 
 const userSchema = new mongoose.Schema(
   {
@@ -59,10 +60,44 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: true,
     },
+    image: {
+      type: string,
+      default: 'https://st3.depositphotos.com/6672868/13801/v/450/depositphotos_138013506-stock-illustration-user-profile-group.jpg'
+    }
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("User6", userSchema);
+// Joi validation schema
+const validationSchema = Joi.object({
+  _id: Joi.required(),
+  firstname: Joi.string().min(3).max(20).required(),
+  lastname: Joi.string().min(3).max(20).required(),
+  email: Joi.string().max(40).required(),
+  password: Joi.string().required(),
+  age: Joi.number(),
+  address: Joi.object(),
+  gender: Joi.string(),
+  role: Joi.string(),
+  phoneNumber: Joi.number().max(11),
+  isActive: Joi.boolean(),
+  createdAt: Joi.date(),
+  updatedAt: Joi.date(),
+});
 
-module.exports = User;
+// Mongoose pre-save hook for validation
+userSchema.pre("save", function (next) {
+  const validation = validationSchema.validate(this.toObject());
+  if (validation.error) {
+    const err = validation.error.details[0].message;
+
+    return Promise.reject('Validation Error: ' + validation.error.details[0].message); // Reject the Promise with the validation error
+    // Handle validation error (throw an error or handle it based on your application logic)
+    next(res.json({ err, status: "failed! " }));
+  } else {
+    // Validation successful, continue with the save operation
+    next();
+  }
+});
+
+module.exports = mongoose.model("User6", userSchema);

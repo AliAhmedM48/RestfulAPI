@@ -6,63 +6,47 @@ const userRoute = require("./routes/user.route");
 const authRoute = require("./routes/auth.router");
 
 const storsRoute = require("./routes/stories.router");
-const connect=require("./dataBase/connectToDB");
+const connect = require("./dataBase/connectToDB");
 
-const {verifyToken , checkRole} = require("./middleware/auth");
+const { verifyToken, checkRole } = require("./middleware/auth");
 const User = require("./models/user.model");
-
 
 dotenv.config();
 const app = express();
-const PORT =  process.env.PORT||5000;
-
-
-
+const PORT = process.env.PORT || 5000;
+//
 app.use(cors());
-app.use(cors({
-  origin: 'http://localhost:4200' // Replace with your allowed origin
-}));
-app.use(cors({
-  origin:"*"// Replace with your allowed origin
-}));
 app.use(express.json());
-app.get("/users", async(req,res)=>{
-  try
-  {
+app.get("/users", async (req, res) => {
+  try {
     const users = await User.find({});
     res.json(users);
-  }
-  catch(eror)
-  {
+  } catch (eror) {
     console.log(eror);
     res.status(500).json({
-      message: "Internal Server Error"
-    })
+      message: "Internal Server Error",
+    });
   }
+});
 
-})
-
-app.get("/test",(req , res)=>{
+app.get("/test", (req, res) => {
   res.json({
-    message :"Hello"
-  })
-})
-app.use("/user",verifyToken,checkRole(), userRoute);
-app.use("/devjourney", authRoute);
+    message: "Hello",
+  });
+});
+// app.use("/user", verifyToken, checkRole(), userRoute);
+app.use("/user", userRoute);
+app.use("/DevJourney", authRoute);
 
-app.use(cors());
-app.use(cors({
-  origin: 'http://localhost:4200' // Replace with your allowed origin
-}));
-app.use(cors({
-  origin:"*"// Replace with your allowed origin
-}));
 //stories
-// app.use("/story",verifyToken, storsRoute);
+// app.use("/story", verifyToken, checkRole(), storsRoute);
 app.use("/story", storsRoute);
 
-
-connect()
+connect();
 app.listen(PORT, () => {
-  console.log(PORT,"server is running..");
+  console.log(PORT, "server is running..");
 });
+
+
+
+
